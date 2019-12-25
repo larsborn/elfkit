@@ -603,8 +603,8 @@ impl Elf {
         self.header.ehsize    = self.header.size() as u16;
         let mut hoff = (self.header.phnum as u64 * self.header.phentsize as u64) + self.header.ehsize as u64;
 
-        ///TODO this is shitty, because we need to replicate all the alignment code
-        ///also most of those sections dont actually need to be moved
+        //TODO this is shitty, because we need to replicate all the alignment code
+        //also most of those sections dont actually need to be moved
         for sec in &mut self.sections[1..] {
             if sec.header.addralign > 0 {
                 let oa = hoff % sec.header.addralign;
@@ -679,7 +679,7 @@ impl Elf {
 
     //TODO this code isnt tested at all
     //TODO the warnings need to be emited when calling store_all instead
-    pub fn remove_section(&mut self, at: usize) -> Result<(Section), Error> {
+    pub fn remove_section(&mut self, at: usize) -> Result<Section, Error> {
         let r = self.sections.remove(at);
 
         for sec in &mut self.sections {
